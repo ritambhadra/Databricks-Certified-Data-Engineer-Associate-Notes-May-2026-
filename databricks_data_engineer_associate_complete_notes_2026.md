@@ -2441,3 +2441,867 @@ Best choice:
 * Lakeflow Job
 
 because this is scheduled production ETL.
+
+
+These 13 topics are essentially the **core of the Databricks Data Engineer Associate exam**.
+If you master them deeply, your probability of passing becomes very high.
+
+Below is the **high-value conceptual understanding** you should have for each topic.
+
+---
+
+# 1. Delta Lake
+
+MOST IMPORTANT TOPIC.
+
+# What You Must Know
+
+## Core Features
+
+* ACID transactions
+* Time travel
+* Schema enforcement
+* Schema evolution
+* MERGE/UPDATE/DELETE
+* Transaction log (`_delta_log`)
+
+---
+
+# Why Delta Exists
+
+Parquet alone cannot safely handle:
+
+* concurrent writes
+* updates
+* deletes
+* reliable streaming
+
+Delta solves these problems.
+
+---
+
+# Most Important Commands
+
+## Create Delta Table
+
+```sql id="bocm71"
+CREATE TABLE sales
+USING DELTA;
+```
+
+---
+
+## MERGE
+
+```sql id="jv8u3j"
+MERGE INTO target t
+USING source s
+ON t.id = s.id
+WHEN MATCHED THEN UPDATE SET *
+WHEN NOT MATCHED THEN INSERT *
+```
+
+---
+
+## Time Travel
+
+```sql id="d7g5tv"
+SELECT * FROM sales VERSION AS OF 5;
+```
+
+---
+
+## OPTIMIZE
+
+```sql id="zy46lf"
+OPTIMIZE sales;
+```
+
+---
+
+## VACUUM
+
+```sql id="f4qz2q"
+VACUUM sales;
+```
+
+---
+
+# Exam Focus
+
+Understand:
+
+* WHY Delta is superior to Parquet
+* WHEN to use MERGE
+* HOW ACID works
+* WHY time travel matters
+
+---
+
+# 2. Unity Catalog
+
+Governance layer of Databricks.
+
+VERY IMPORTANT.
+
+---
+
+# Hierarchy
+
+Must memorize:
+
+```text id="z89e7w"
+Metastore
+   Catalog
+      Schema
+         Table
+```
+
+---
+
+# Key Features
+
+* Central governance
+* Access control
+* Auditing
+* Lineage
+* Row-level security
+* Column masking
+
+---
+
+# Important Commands
+
+## GRANT
+
+```sql id="tzgqv4"
+GRANT SELECT ON TABLE sales TO analysts;
+```
+
+---
+
+## REVOKE
+
+```sql id="obn7ut"
+REVOKE MODIFY ON TABLE sales FROM analysts;
+```
+
+---
+
+# Common Exam Scenario
+
+Question says:
+
+* centralized governance
+* cross-workspace security
+* auditing
+
+Answer:
+Unity Catalog.
+
+---
+
+# 3. Auto Loader
+
+VERY IMPORTANT ingestion topic.
+
+---
+
+# Purpose
+
+Efficient incremental ingestion from cloud storage.
+
+Supports:
+
+* S3
+* ADLS
+* GCS
+
+---
+
+# Best For
+
+* Streaming ingestion
+* Millions of files
+* Continuous arrival
+* Schema evolution
+
+---
+
+# Key Features
+
+## Incremental Processing
+
+Processes only new files.
+
+---
+
+## Checkpointing
+
+Tracks ingestion progress.
+
+---
+
+## Schema Evolution
+
+```python id="wqv91j"
+.option("mergeSchema", "true")
+```
+
+---
+
+# Modes
+
+## Directory Listing
+
+* scans folders
+* easier
+* higher cloud API cost
+
+---
+
+## File Notification
+
+* cloud events
+* scalable
+* cheaper
+* preferred in production
+
+---
+
+# Exam Focus
+
+Know difference between:
+
+| Tool        | Best Use                     |
+| ----------- | ---------------------------- |
+| COPY INTO   | Simple incremental batch     |
+| Auto Loader | Scalable streaming ingestion |
+
+---
+
+# 4. PySpark Joins
+
+VERY HIGH probability topic.
+
+---
+
+# Inner Join
+
+```python id="3g3w0r"
+df1.join(df2, "id", "inner")
+```
+
+Matching rows only.
+
+---
+
+# Left Join
+
+```python id="q0czqx"
+df1.join(df2, "id", "left")
+```
+
+Keeps all left rows.
+
+---
+
+# Broadcast Join
+
+MOST IMPORTANT optimization join.
+
+```python id="q0z8ic"
+large.join(broadcast(small), "id")
+```
+
+---
+
+# Why Broadcast Join?
+
+Avoids shuffle.
+
+Huge exam topic.
+
+Use when:
+
+* one table small
+* dimension table small
+
+---
+
+# Cross Join
+
+Cartesian product.
+
+Very expensive.
+
+Usually avoid.
+
+---
+
+# Exam Focus
+
+Know:
+
+* which join keeps which rows
+* broadcast join optimization
+* shuffle reduction
+
+---
+
+# 5. DataFrame Transformations
+
+Core PySpark area.
+
+---
+
+# Common Transformations
+
+## select
+
+```python id="i5uk6q"
+df.select("name")
+```
+
+---
+
+## filter
+
+```python id="s3c1b7"
+df.filter(col("age") > 18)
+```
+
+---
+
+## withColumn
+
+```python id="n5wbbe"
+df.withColumn("year", year(col("date")))
+```
+
+---
+
+## drop
+
+```python id="ms1xew"
+df.drop("temp")
+```
+
+---
+
+## explode
+
+Very important for arrays.
+
+```python id="lsk5tm"
+df.select(explode("items"))
+```
+
+---
+
+# Null Handling
+
+```python id="vtq0l9"
+df.na.fill(0)
+```
+
+```python id="u0s0t4"
+df.na.drop()
+```
+
+---
+
+# Deduplication
+
+```python id="hmf7wd"
+df.dropDuplicates(["id"])
+```
+
+---
+
+# Exam Focus
+
+Expect transformation-based MCQs.
+
+---
+
+# 6. Lakeflow Jobs
+
+Workflow orchestration service.
+
+---
+
+# Used For
+
+* ETL scheduling
+* dependencies
+* retries
+* automation
+
+---
+
+# DAG
+
+Directed Acyclic Graph.
+
+```text id="9m8v57"
+Task A → Task B → Task C
+```
+
+---
+
+# Important Features
+
+## Retries
+
+Automatically reruns failed tasks.
+
+---
+
+## Conditional Logic
+
+Supports:
+
+* branching
+* loops
+* conditions
+
+---
+
+# Trigger Types
+
+| Trigger      | Use              |
+| ------------ | ---------------- |
+| Scheduled    | Time-based       |
+| File arrival | Event-driven     |
+| Table update | Dependency-based |
+
+---
+
+# Exam Focus
+
+Understand:
+
+* DAG dependencies
+* retries
+* scheduling
+* trigger selection
+
+---
+
+# 7. Medallion Architecture
+
+VERY COMMON exam topic.
+
+---
+
+# Bronze
+
+Raw data.
+
+Minimal transformations.
+
+Append-only.
+
+---
+
+# Silver
+
+Cleaned data.
+
+Includes:
+
+* deduplication
+* joins
+* validation
+* standardization
+
+---
+
+# Gold
+
+Business-ready.
+
+Used for:
+
+* dashboards
+* KPIs
+* BI
+
+---
+
+# Flow
+
+```text id="w0b85w"
+Source → Bronze → Silver → Gold
+```
+
+---
+
+# Exam Focus
+
+Know what operations belong in each layer.
+
+---
+
+# 8. Spark Optimization
+
+Critical topic.
+
+---
+
+# Shuffle
+
+Most important bottleneck.
+
+Occurs during:
+
+* joins
+* groupBy
+* distinct
+* repartition
+
+---
+
+# Broadcast Join
+
+Reduces shuffle.
+
+---
+
+# Repartition vs Coalesce
+
+## repartition()
+
+Full shuffle.
+
+```python id="k44k0u"
+df.repartition(10)
+```
+
+---
+
+## coalesce()
+
+Reduce partitions efficiently.
+
+```python id="5l5w6u"
+df.coalesce(2)
+```
+
+---
+
+# Cache
+
+```python id="61zt0i"
+df.cache()
+```
+
+Useful for repeated computation.
+
+---
+
+# Important Configurations
+
+## shuffle partitions
+
+```text id="rzmr7m"
+spark.sql.shuffle.partitions
+```
+
+---
+
+## broadcast threshold
+
+```text id="pvt3wu"
+spark.sql.autoBroadcastJoinThreshold
+```
+
+---
+
+# Exam Focus
+
+Understand WHY optimizations work.
+
+---
+
+# 9. MERGE INTO
+
+VERY IMPORTANT.
+
+UPSERT operation.
+
+---
+
+# Combines
+
+* INSERT
+* UPDATE
+* DELETE
+
+---
+
+# Syntax
+
+```sql id="nd0y7k"
+MERGE INTO target t
+USING source s
+ON t.id = s.id
+WHEN MATCHED THEN UPDATE SET *
+WHEN NOT MATCHED THEN INSERT *
+```
+
+---
+
+# Used For
+
+* CDC
+* incremental loading
+* SCD Type 1
+
+---
+
+# Why Important?
+
+Atomic operation.
+
+Reliable production pipelines.
+
+---
+
+# 10. Managed vs External Tables
+
+Extremely common exam question.
+
+---
+
+# Managed Table
+
+Databricks manages:
+
+* metadata
+* storage
+
+DROP deletes data.
+
+---
+
+# External Table
+
+You manage storage path.
+
+DROP removes metadata only.
+
+Data remains.
+
+---
+
+# Comparison
+
+| Feature           | Managed | External |
+| ----------------- | ------- | -------- |
+| Storage managed   | Yes     | No       |
+| DROP deletes data | Yes     | No       |
+| Better governance | Yes     | Partial  |
+
+---
+
+# Exam Focus
+
+Very commonly tested.
+
+---
+
+# 11. Structured Streaming Basics
+
+Important foundational topic.
+
+---
+
+# Key Concepts
+
+## Trigger
+
+Controls execution timing.
+
+---
+
+## Checkpoint
+
+Stores progress/state.
+
+Required for fault tolerance.
+
+---
+
+## Watermark
+
+Handles late-arriving data.
+
+---
+
+# Output Modes
+
+| Mode     | Meaning                 |
+| -------- | ----------------------- |
+| Append   | New rows only           |
+| Update   | Updated rows            |
+| Complete | Entire result rewritten |
+
+---
+
+# Exam Focus
+
+Understand checkpointing deeply.
+
+---
+
+# 12. Governance and Security
+
+Mostly Unity Catalog concepts.
+
+---
+
+# Access Control
+
+Using:
+
+* GRANT
+* REVOKE
+* DENY
+
+---
+
+# Security Levels
+
+* Catalog
+* Schema
+* Table
+* Column
+* Row
+
+---
+
+# Column Masking
+
+Hide sensitive data.
+
+---
+
+# Row Filtering
+
+Restrict rows by user/group.
+
+---
+
+# ABAC
+
+Attribute-based access control.
+
+Policy-driven governance.
+
+---
+
+# 13. Performance Troubleshooting
+
+Very practical exam area.
+
+---
+
+# Common Bottlenecks
+
+## Shuffle
+
+Network-heavy redistribution.
+
+---
+
+## Data Skew
+
+One partition too large.
+
+Symptoms:
+
+* one slow task
+* executor imbalance
+
+---
+
+## Disk Spill
+
+Memory insufficient.
+
+Spark writes temporary data to disk.
+
+Very slow.
+
+---
+
+# Spark UI
+
+Used to analyze:
+
+* stages
+* tasks
+* spill
+* shuffle
+* skew
+
+---
+
+# Important Metrics
+
+| Metric        | Meaning             |
+| ------------- | ------------------- |
+| Shuffle Read  | Incoming shuffle    |
+| Shuffle Write | Outgoing shuffle    |
+| Spill         | Memory overflow     |
+| Task Time     | Slow task detection |
+
+---
+
+# Final Priority Ranking for Exam
+
+## Tier 1 (Must Master)
+
+1. Delta Lake
+2. Auto Loader
+3. PySpark transformations
+4. Joins
+5. MERGE INTO
+6. Unity Catalog
+7. Spark optimization
+
+---
+
+## Tier 2 (Strong Understanding)
+
+8. Lakeflow Jobs
+9. Structured Streaming
+10. Medallion architecture
+11. Managed vs External tables
+
+---
+
+## Tier 3 (Support Topics)
+
+12. Governance/security
+13. Troubleshooting/monitoring
+
+---
+
+# Most Important Mental Model
+
+The exam repeatedly asks:
+
+## “Which solution is MOST optimized, scalable, and production-ready?”
+
+Usually the correct answer is the one that:
+
+* minimizes shuffle
+* supports incremental processing
+* improves governance
+* reduces operational overhead
+* scales automatically
+* uses Delta Lake features properly
+
