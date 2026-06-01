@@ -3283,3 +3283,499 @@ Usually the correct answer is the one that:
 * scales automatically
 * uses Delta Lake features properly
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+**Exam instincts 🔥 (pattern recognition + keywords → answer)**
+
+
+***
+
+# ✅ 🔥 HIGH-VALUE ADDITIONS (Exam Gold)
+
+***
+
+## 🟢 Delta Lake & Table Operations
+
+### ✅ Exam Tip:
+
+👉 If the question says:
+
+* **slow queries on Delta table**
+* **large table scan**
+* **optimize read perf**
+
+➡️ Answer =
+✅ `OPTIMIZE` ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If the question mentions:
+
+* **duplicate records**
+* **upsert/update existing rows**
+
+➡️ Answer =
+✅ `MERGE INTO` ✅
+
+✅ One-line:
+👉 “Insert + update → MERGE”
+
+***
+
+### ✅ Exam Tip:
+
+👉 If the question mentions:
+
+* **history / auditing / rollback**
+
+➡️ Answer =
+✅ `DESCRIBE HISTORY` ✅  
+✅ Time Travel ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If the question says:
+
+* **delete old data automatically**
+* **retention period**
+
+➡️ Answer =
+✅ `VACUUM` ✅
+
+✅ One-line:
+👉 “Clean old files → VACUUM”
+
+***
+
+## 🟢 Auto Loader (VERY FREQUENT)
+
+### ✅ Exam Tip:
+
+👉 If the question mentions:
+
+* **incremental file ingestion**
+* **new files automatically detected**
+
+➡️ Answer =
+✅ Auto Loader ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* millions of files
+* reduce cloud API calls
+
+➡️ Answer =
+✅ file notification mode ✅
+
+(you already captured this 👍)
+
+***
+
+### ✅ Exam Tip:
+
+👉 If schema evolves:
+
+➡️ Answer =
+✅ `cloudFiles.schemaEvolutionMode` ✅
+
+***
+
+## 🟢 Streaming vs Batch
+
+### ✅ Exam Tip:
+
+👉 If the question says:
+
+* **continuous processing**
+* **real-time updates**
+
+➡️ Answer =
+✅ Structured Streaming ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* “once per day”
+* “historical batch”
+
+➡️ Answer =
+✅ Batch processing ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If the question mentions:
+
+* **restart after failure**
+* **resume from last point**
+
+➡️ Answer =
+✅ checkpoint location ✅
+
+✅ One-line:
+👉 “Streaming reliability = checkpoint”
+
+***
+
+## 🟢 Medallion Architecture (VERY COMMON)
+
+### ✅ Exam Tip:
+
+| Layer  | Meaning          |
+| ------ | ---------------- |
+| Bronze | Raw data         |
+| Silver | Cleaned + joined |
+| Gold   | Aggregated/BI    |
+
+***
+
+✅ Memory trick:
+👉 “Raw → Clean → Business”
+
+***
+
+### ✅ Exam Tip:
+
+👉 If question says:
+
+* **data quality checks**
+* **cleaning raw data**
+
+➡️ Answer =
+✅ Silver layer ✅
+
+***
+
+## 🟢 Joins & Performance
+
+### ✅ Exam Tip:
+
+👉 If the question mentions:
+
+* **small table + big table**
+
+➡️ Answer =
+✅ Broadcast join ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* join slow
+* shuffle heavy
+
+➡️ Answer =
+✅ increase partitions ✅  
+✅ optimize join ✅
+
+(your note correct 👍)
+
+***
+
+## 🟢 Cluster / Compute
+
+### ✅ Exam Tip:
+
+👉 If the question says:
+
+* **ad hoc analysis**
+* **data science / notebooks**
+
+➡️ Answer =
+✅ All-purpose cluster ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* **scheduled pipeline**
+* **job execution**
+
+➡️ Answer =
+✅ Job cluster ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* **SQL dashboards / BI tools**
+
+➡️ Answer =
+✅ SQL Warehouse ✅
+
+***
+
+## 🟢 Delta Live Tables (DLT)
+
+### ✅ Exam Tip:
+
+👉 If the question says:
+
+* **pipeline with data quality checks**
+* **managed ETL**
+
+➡️ Answer =
+✅ Delta Live Tables ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* declarative pipeline
+* automatic dependency resolution
+
+➡️ Answer =
+✅ DLT ✅
+
+***
+
+✅ Your EXPECT rules section is spot on 👍
+
+***
+
+## 🟢 Unity Catalog (Governance)
+
+### ✅ Exam Tip:
+
+👉 If the question mentions:
+
+* **centralized access control**
+* **multiple workspaces**
+* **governance**
+
+➡️ Answer =
+✅ Unity Catalog ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* **table permissions**
+* **row/column security**
+
+➡️ Answer =
+✅ GRANT / REVOKE ✅
+
+***
+
+## 🟢 SQL vs PySpark
+
+### ✅ Exam Tip:
+
+👉 If question shows:
+
+* simple transformations
+
+➡️ Answer =
+✅ SQL ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* complex logic / programmatic
+
+➡️ Answer =
+✅ PySpark ✅
+
+***
+
+## 🟢 File Formats
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* performance + reliability needed
+
+➡️ Answer =
+✅ Delta ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* raw ingestion
+
+➡️ Answer =
+✅ JSON / CSV ✅
+
+***
+
+✅ One-line:
+👉 “Delta = default always”
+
+***
+
+## 🟢 Schema Handling
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* schema mismatch error
+
+➡️ Answer =
+✅ `mergeSchema` ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* strict schema enforcement
+
+➡️ Answer =
+✅ default Delta behavior ✅
+
+***
+
+## 🟢 Workspace & Notebooks
+
+### ✅ Exam Tip:
+
+👉 If the question mentions:
+
+* modular code reuse
+
+➡️ Answer =
+✅ `%run` ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* parameter passing to notebooks
+
+➡️ Answer =
+✅ widgets ✅
+
+***
+
+## 🟢 Jobs & Workflows
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* multiple tasks
+* dependencies
+
+➡️ Answer =
+✅ Workflows ✅
+
+***
+
+### ✅ Exam Tip:
+
+👉 If:
+
+* retry on failure
+
+➡️ Answer =
+✅ job retry configuration ✅
+
+***
+
+## 🟢 Trick Questions (IMPORTANT)
+
+***
+
+### ⚠️ Trap:
+
+👉 “best performance”
+
+➡️ Often answer =
+✅ Photon ✅
+
+***
+
+### ⚠️ Trap:
+
+👉 “lowest cost”
+
+➡️ Usually:
+✅ Spot instances ✅  
+✅ Serverless ✅
+
+***
+
+### ⚠️ Trap:
+
+👉 “fully managed / minimal ops”
+
+➡️ Answer =
+✅ Serverless ✅  
+or  
+✅ DLT ✅
+
+***
+
+### ⚠️ Trap:
+
+👉 “reliable + exactly-once ingestion”
+
+➡️ Answer =
+✅ Auto Loader + checkpoint ✅
+
+***
+
+# ✅ 🔥 SUPER COMPACT REVISION (MEMORY SHEET)
+
+* `:` → SQL parameter
+* Private network → Classic compute
+* BI/analytics → SQL Warehouse
+* Streaming table → `STREAM()`
+* Cheap compute → Spot
+* Deep stats → `summary()`
+* Delta performance → Photon
+* File overwrite → `allowOverwrites`
+* UI → Control plane
+* Upsert → `MERGE`
+* Dedup → `APPLY CHANGES INTO`
+* Kafka → 4 configs required
+* Shuffle fail → more partitions
+* SaaS ingestion → Lakeflow Connect
+* Schema location → `DESCRIBE SCHEMA EXTENDED`
+* Broadcast size → `autoBroadcastJoinThreshold`
+* Many files → Auto Loader notifications
+* Multi-col filter → Z-ORDER
+* No duplicates → incremental load
+* Null drop → `how='all'`
+* DLT violation logging → CONTINUE
+* Frequent small jobs → Serverless
+* Governance → Unity Catalog
+* Stream restart → new checkpoint
+
+***
+
